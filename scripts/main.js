@@ -49,6 +49,9 @@
 		}
 	})
 
+
+  	window.setInterval(renderMessages, 30000);
+
   });
 
   function validate(input) {
@@ -58,8 +61,6 @@
   		return true;
   	}
   }
-
-  window.setInterval(renderMessages, 30000);
 
   function updateMessages() {
   	renderChat();
@@ -101,7 +102,10 @@
   		url: url,
   		type: 'GET',
   	}).then(function(data) {
-  		$('.messages-container').html(JST['messages'](sortMessages(data)));  	
+  		$('.messages-container').html(JST['messages'](sortMessages(data)));  
+  		$('.container-content').scrollTop($(document).height());
+  		$('.message-input-content').focus();
+    	return false;
   	});
   }
 
