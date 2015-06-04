@@ -1,1 +1,25 @@
-howdy
+<div class="container-users">
+	<ul class="list-of-users">
+	{{#each this}}
+		<li class="user">{{username}}</li>
+	{{/each}}
+	</ul>
+</div>
+<div class="container-content">
+	<div class="messages-container">
+		<ul class="list-of-messages">
+		{{#each this}}
+			<li class="message">
+				<h3 class="message-author">{{username}}</h3>
+				<h4 class="message-time">{{created_at}}</h4>
+				<p class="message-body">{{body}}</p>
+		{{/each}}
+		</ul>
+	</div>
+	<div class="message-input">
+		<form action="" class="message-input-form">
+			<button class="submit"><i class="fa fa-arrow-circle-o-up"></i></button>
+			<textarea class="message-input-content" name="" id="" cols="30" rows="2"></textarea>
+		</form>
+	</div>
+</div>

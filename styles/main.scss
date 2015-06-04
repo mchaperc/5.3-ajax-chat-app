@@ -1,4 +1,5 @@
 @import '../bower_components/bourbon/app/assets/stylesheets/bourbon';
+$gutter: 0em;
 @import '../bower_components/neat/app/assets/stylesheets/neat';
 
 // Typography
@@ -10,12 +11,20 @@ $dark-gray: #333;
 $medium-gray: #999;
 $light-gray: #ddd;
 $very-light-gray: #fafafa;
+$tan: rgb(251, 217, 180);
+$mint: rgb(151, 255, 226);
+$light-blue: rgb(103, 174, 193);
 
 $base-font-color: $dark-gray;
 $base-background-color: $very-light-gray;
 
+@import './_login.scss';
+@import './_chat.scss';
+
 body {
   font-family: $base-font-family;
   background-color: $base-background-color;
-  color: $base-font-color;
+  color: $very-light-gray;
+  height: 100%;
+  padding: 0;
 }
