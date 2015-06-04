@@ -8,4 +8,4 @@
 - [x] Log a list of messages from the server
 - [x] Display a list of messages from the server
 - [x] Implement form to create a new message
-- [ ] Fetch new messages every 30 seconds and display fetched messages.
+- [x] Fetch new messages every 30 seconds and display fetched messages.

@@ -1,0 +1,9 @@
+<ul class="list-of-messages">
+{{#each this}}
+	<li class="message">
+		<i class="fa fa-gear"></i>
+		<h3 class="message-author">{{username}}</h3>
+		<h4 class="message-time">{{created_at}}</h4>
+		<p class="message-body">{{body}}</p>
+{{/each}}
+</ul>

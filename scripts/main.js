@@ -13,24 +13,53 @@
     $(document).on('submit', '.login-form', function(e) {
 	  	e.preventDefault();
 	  	window.location.hash = '/chat';
-	  	username = ($(this).find('.login-form-username').val());
-	  	storeUsername(username);
+	  	if (validate($(this).find('.login-form-username').val())) {
+	  		username = ($(this).find('.login-form-username').val());
+	  		storeUsername(username);
+	  	} else {
+	  		console.log("Quit hacking me.");
+	  	}
 	});
 
 	$(document).on('click', '.submit', function(e) {
 		e.preventDefault();
-		var message = $('.message-input-content').val();
-		submitMessage(message);
-		renderChat();
+		if (validate($('.message-input-content').val())) {
+			var message = $('.message-input-content').val();
+			submitMessage(message);
+			renderChat();
+		} else {
+			console.log("Quit hacking me.");
+		}
 	})
 
 	$(window).on('hashchange', function(e) {
 		route();
 	});
 
+	$(document).on('keypress', '.message-input-content', function(e) {
+		var code = e.keyCode;
+		if (code === '13') {
+			if (validate($('.message-input-content').val())) {
+			var message = $('.message-input-content').val();
+			submitMessage(message);
+			renderChat();
+		} else {
+			console.log("Quit hacking me.");
+		}
+		}
+	})
+
   });
 
-  window.setInterval(updateMessages, 5000);
+  function validate(input) {
+  	if (input.indexOf('<script>') !== -1) {
+  		return false;
+  	} else {
+  		return true;
+  	}
+  }
+
+  window.setInterval(renderMessages, 30000);
 
   function updateMessages() {
   	renderChat();
@@ -62,14 +91,28 @@
   		type: 'GET',
   	}).then(function(data) {
   		console.log(data);
-  		$('.application').html(JST['chat'](data));  	
+  		$('.application').html(JST['chat'](data));	
+  		renderMessages(data);
   	});
-	console.log(username);
+  }
+
+  function renderMessages() {
+  	$.ajax({
+  		url: url,
+  		type: 'GET',
+  	}).then(function(data) {
+  		$('.messages-container').html(JST['messages'](sortMessages(data)));  	
+  	});
+  }
+
+  function sortMessages(data) {
+  	return data.reverse();
   }
 
   function submitMessage(message) {
-  	console.log(message);
-  	console.log(username);
+  	while (message === '') {
+  		message = prompt("Please enter a message this time:");
+  	}
   	$.ajax({
   		url: url,
   		type: 'POST',
@@ -78,8 +121,6 @@
   			'body': message,
   			'created_at': currentTime()
   		}
-  	}).then(function(data) {
-  		console.log(data);
   	});
   }
 
@@ -91,6 +132,9 @@
   		timeArray[0] = toStandardHours(timeArray[0]);
   	}
   	timeArray.push(myTime.getMinutes());
+  	if(timeArray[1] < 10) {
+  		timeArray[1] = '0' + timeArray[1];
+  	}
   	myTime = timeArray.join(':');
   	return myTime;
   }

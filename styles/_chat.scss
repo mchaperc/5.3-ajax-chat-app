@@ -1,7 +1,8 @@
-.container-users {
+.container-channels {
 	@include span-columns(3);
 	background-color: $tan;
 	color: rgb(0,0,0);
+	padding: 2em;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -13,18 +14,63 @@
 	background-color: $light-blue;
 	height: 100%;
 	padding: 2em;
+	padding-bottom: 5em;
 	position: absolute;
 	right: 0;
+	overflow: auto;
+}
+
+.message-author,
+.message-time {
+	display: inline-block;
+	margin-right: 2em;
+	margin-bottom: 1em;
+}
+
+.message-author {
+	font-weight: bold;
+}
+
+.message-time {
+	color: $light-gray;
+	font-size: .8em;
+}
+
+.message-body {
+	font-weight: 100;
+	padding-left: 1em;
+}
+
+.fa-gear {
+	color: rgba(100,100,100, 0.7);
+	float: right;
+}
+
+.message {
+	letter-spacing: .05em;
+	margin-bottom: 1.2em;
+}
+
+.fa-gear {
+	visibility: hidden;
+}
+
+.message:hover .fa-gear {
+	visibility: visible;
 }
 
 .message-input-form {
-	position: absolute;
+	position: fixed;
 	bottom: 5%;
-	left: 2em;
-	width: 100%;
+	left: 28%;
+	width: 75%;
+	margin: 0;
 }
 
-textarea {
+.message-input-content {
+	border: 1px solid darkgray;
+	border-radius: 5px;
+	box-shadow: inset 0 2px 2px rgba(50,50,50,.3);
 	color: $medium-gray;
 	font-size: 1.2em;
 	height: 40px;
@@ -34,7 +80,7 @@ textarea {
 }
 
 .submit {
-	background: linear-gradient(white 1%, $mint, $mint, $mint);
+	background: linear-gradient(white 1%, $light-gray, $light-gray);
 	border: 1px solid $medium-gray;
 	border-radius: 5px;
 	color: $medium-gray;
