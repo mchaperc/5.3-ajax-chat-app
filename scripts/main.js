@@ -6,14 +6,14 @@
   var url = 'http://tiny-lasagna-server.herokuapp.com/collections/matt-messages/';
 
   $(document).ready(function(){
-    $('body').prepend(JST['application']());
-
-    route();
+    
+    window.chatRouter = new ChatRouter();
+    Backbone.history.start();
 
     $(document).on('submit', '.login-form', function(e) {
 	  	e.preventDefault();
-	  	window.location.hash = '/chat';
 	  	if (validate($(this).find('.login-form-username').val())) {
+	  		window.chatRouter.navigate('/chat', {trigger: true});
 	  		username = ($(this).find('.login-form-username').val());
 	  		storeUsername(username);
 	  	} else {
@@ -32,23 +32,18 @@
 		}
 	})
 
-	$(window).on('hashchange', function(e) {
-		route();
-	});
-
 	$(document).on('keypress', '.message-input-content', function(e) {
 		var code = e.keyCode;
 		if (code === '13') {
 			if (validate($('.message-input-content').val())) {
-			var message = $('.message-input-content').val();
-			submitMessage(message);
-			renderChat();
-		} else {
+				var message = $('.message-input-content').val();
+				submitMessage(message);
+				renderChat();
+			} else {
 			console.log("Quit hacking me.");
-		}
+			}
 		}
 	})
-
 
   	window.setInterval(renderMessages, 30000);
 
@@ -70,21 +65,19 @@
   	window.localStorage.setItem('username', username);
   }
 
-  function route() {
-  	switch(window.location.hash) {
-    	case '': 
-    		renderLogin();    		
-    		break;
-    	case '#/chat':
-    		renderChat();
-    		break;  		
-    }
-  }
+  var ChatRouter = Backbone.Router.extend({
+  	routes: {
+  		'': 'index',
+  		'chat': 'chat'
+  	},
 
-  function renderLogin() {
-  	$('.application').html(JST['login']());
-  	console.log('login');
-  }
+  	index: function() {
+  		$('.application').html(JST['login']());
+  	},
+
+  	chat: renderChat
+
+  })
 
   function renderChat() {
   	$.ajax({
